@@ -91,6 +91,67 @@ namespace MultiQueueModels
         {
 
         }
+        public void ChooseServer(SimulationCase customer)
+        {
+            Servers = new List<Server>();
+            for (int i = 0; i < NumberOfServers; i++)
+            {
+                if (Servers[i].FinishTime > customer.ArrivalTime)
+                {
+
+                }
+            }
+        }
+        public void CalcClockTimeArrival()
+        {
+
+            SimulationTable = new List<SimulationCase>();
+            for (int i = 1; i < StoppingNumber + 1; i++)
+            {
+                if (i == 1)
+                {
+                    SimulationTable[i].TimeInQueue = 0;
+                }
+                else
+                {
+                    SimulationTable[i].ArrivalTime = SimulationTable[i].InterArrival + SimulationTable[i - 1].ArrivalTime;
+                }
+            }
+        }
+
+        public void CalcTimeInQueue()
+        {
+            for (int i = 1; i < StoppingNumber + 1; i++)
+            {
+                if (i == 1)
+                {
+                    SimulationTable[i].TimeInQueue = 0;
+                }
+                if (SimulationTable[i - 1].EndTime > SimulationTable[i].ArrivalTime)
+                {
+                    SimulationTable[i].TimeInQueue = SimulationTable[i - 1].EndTime - SimulationTable[i].ArrivalTime;
+                }
+                else
+                {
+                    SimulationTable[i].TimeInQueue = 0;
+                }
+            }
+
+        }
+
+        public void CalcStartTime()
+        {
+            for (int i = 1; i < StoppingNumber + 1; i++)
+            {
+                if (i == 1)
+                {
+                    SimulationTable[i].StartTime = 0;
+                }
+
+                SimulationTable[i].StartTime = SimulationTable[i - 1].EndTime;
+            }
+        }
+
         public void all()
         {
             find_interarrival();

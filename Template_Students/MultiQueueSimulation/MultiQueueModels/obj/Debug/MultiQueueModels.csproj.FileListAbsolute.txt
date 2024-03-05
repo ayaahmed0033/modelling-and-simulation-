@@ -40,3 +40,9 @@ C:\Users\Aya\Downloads\modeling and simulation\task 1\Template_Students\MultiQue
 C:\Users\Aya\Downloads\modeling and simulation\task 1\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.csproj.CoreCompileInputs.cache
 C:\Users\Aya\Downloads\modeling and simulation\task 1\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.dll
 C:\Users\Aya\Downloads\modeling and simulation\task 1\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.pdb
+D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueModels\bin\Debug\MultiQueueModels.dll
+D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueModels\bin\Debug\MultiQueueModels.pdb
+D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.csproj.AssemblyReference.cache
+D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.csproj.CoreCompileInputs.cache
+D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.dll
+D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueModels\obj\Debug\MultiQueueModels.pdb
