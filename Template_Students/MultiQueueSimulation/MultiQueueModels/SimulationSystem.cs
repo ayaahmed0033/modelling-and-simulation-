@@ -94,12 +94,27 @@ namespace MultiQueueModels
         public void ChooseServer(SimulationCase customer)
         {
             Servers = new List<Server>();
-            for (int i = 0; i < NumberOfServers; i++)
+            if (SelectionMethod.Equals (1))
             {
-                if (Servers[i].FinishTime > customer.ArrivalTime)
+                if (Servers[1].avaialble== true)
+                customer.AssignedServer = Servers[1];
+
+            }
+            
+            else if (SelectionMethod.Equals (2))
+            {
+            for (int i = 0; i < NumberOfServers; i++) // if all servers are full
+            {
+                if (Servers[i].FinishTime < customer.ArrivalTime)
                 {
+                    customer.AssignedServer = Servers[i];
 
                 }
+            else 
+                { 
+                }
+            }
+               
             }
         }
         public void CalcClockTimeArrival()
