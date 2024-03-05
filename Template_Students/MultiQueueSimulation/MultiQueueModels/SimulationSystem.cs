@@ -52,7 +52,7 @@ namespace MultiQueueModels
                 InterarrivalDistribution.Add(new TimeDistribution
                 {
                     Time = int.Parse(distributionParts[0]),
-                    Probability = (decimal)double.Parse(distributionParts[1])
+                    Probability = decimal.Parse(distributionParts[1])
                 });
                 lineIndex++;
             }
@@ -60,10 +60,11 @@ namespace MultiQueueModels
             lineIndex += 2;
             // Read the ServiceDistributions
             Servers = new List<Server>();
-            for (int i = 0; i < NumberOfServers; i++)
+            for (int i = 1; i < NumberOfServers+1; i++)
             {
                 List<TimeDistribution> serviceDistribution = new List<TimeDistribution>();
                 lineIndex++;
+                
                 try
                 {
                     while (lines[lineIndex] != "")
@@ -72,13 +73,15 @@ namespace MultiQueueModels
                         serviceDistribution.Add(new TimeDistribution
                         {
                             Time = int.Parse(distributionParts[0]),
-                            Probability = (decimal)double.Parse(distributionParts[1])
-                        });
+                            Probability = decimal.Parse(distributionParts[1]),
+                            CummProbability = serviceDistribution[i].Probability + serviceDistribution[i - 1].Probability,
+                            MinRange = serviceDistribution[i - 1].MaxRange,
+                            MaxRange = (int)(serviceDistribution[i].Probability * 100)
+                        }); 
                         lineIndex++;
+
                     }
-                    
-                }
-                catch (Exception E) { };
+                }catch(Exception E) { };
                 Servers.Add(new Server { TimeDistribution = serviceDistribution });
                 lineIndex++;
             }
