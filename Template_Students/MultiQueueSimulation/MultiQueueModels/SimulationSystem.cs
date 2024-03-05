@@ -103,18 +103,17 @@ namespace MultiQueueModels
             
             else if (SelectionMethod.Equals (2))
             {
-            for (int i = 0; i < NumberOfServers; i++) // if all servers are full
-            {
-                if (Servers[i].FinishTime < customer.ArrivalTime)
+                for (int i = 0; i < NumberOfServers; i++) // if all servers are full
                 {
-                    customer.AssignedServer = Servers[i];
+
+                    int min = i;
+
+                    if (Servers[min].FinishTime > Servers[i].FinishTime)
+                        min = i;
+                    customer.AssignedServer = Servers[min];
 
                 }
-            else 
-                { 
-                }
-            }
-               
+
             }
         }
         public void CalcClockTimeArrival()
