@@ -124,9 +124,11 @@ namespace MultiQueueModels
                 }       
 
         }
-        public void ChooseServer(SimulationCase customer)
+        public void ChooseServer(int i)
         {
-            
+            SimulationCase customer=SimulationTable[i];
+
+
             if (SelectionMethod.Equals (1))
             {
                 if (Servers[1].avaialble== true)
@@ -150,14 +152,11 @@ namespace MultiQueueModels
             }
             Service_time(customer.CustomerNumber);
         }
-        public void CalcArrivalTime()
+        public void CalcArrivalTime(int i)
         {
 
 
-       
-            for (int i = 1; i < StoppingNumber + 1; i++)
-            {
-                if (i == 1)
+                if (i == 0)
                 {
                     SimulationTable[i].ArrivalTime = 0;
                 }
@@ -166,7 +165,7 @@ namespace MultiQueueModels
                     SimulationTable[i].ArrivalTime = SimulationTable[i].InterArrival + SimulationTable[i - 1].ArrivalTime;
                 }
                 ChooseServer(SimulationTable[i]);
-            }
+            
             
         }
 
@@ -190,11 +189,10 @@ namespace MultiQueueModels
 
         }
 
-        public void CalcStartTime()
+        public void CalcStartTime(int i)
         {
-            for (int i = 1; i < StoppingNumber + 1; i++)
-            {
-                if (i == 1) 
+            
+                if (i == 0) 
                 {
                     SimulationTable[i].StartTime = 0;
                 }
@@ -202,17 +200,12 @@ namespace MultiQueueModels
                 {
                     SimulationTable[i].StartTime = SimulationTable[i - 1].EndTime;
                 }
-                   
-
-
-            }
+        
         }
 
-        public void CalcEndTime()
+        public void CalcEndTime(int i)
         {
-            for (int i = 1; i < StoppingNumber + 1; i++)
-            {
-                if (i == 1)
+                if (i == 0)
                 {
                     SimulationTable[i].EndTime = SimulationTable[i].ServiceTime;
                 }
@@ -220,20 +213,18 @@ namespace MultiQueueModels
                 {
                     SimulationTable[i].EndTime = SimulationTable[i].StartTime + SimulationTable[i].ServiceTime;
                 }
-                    
-            }
+           
         }
-
-
-
-
         public void all()
         {
             for (int i = 0; i < StoppingNumber ; i++)
             {
                 customer_id(i);
                 find_interarrival(i);
-                CalcArrivalTime();
+                //choose server 
+                CalcArrivalTime(i);
+                CalcStartTime(i);
+                CalcEndTime(i);
             }
 
 
