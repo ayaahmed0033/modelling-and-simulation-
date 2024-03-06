@@ -49,6 +49,7 @@ namespace MultiQueueModels
             int i = 1;
             while (lines[lineIndex] != "")
             {
+                
                 string[] distributionParts = lines[lineIndex].Split(',');
                 InterarrivalDistribution.Add(new TimeDistribution
                 {
@@ -57,16 +58,16 @@ namespace MultiQueueModels
                     CummProbability = InterarrivalDistribution[i].Probability + InterarrivalDistribution[i - 1].Probability,
                     MinRange = InterarrivalDistribution[i - 1].MaxRange,
                     MaxRange = (int)(InterarrivalDistribution[i].Probability * 100)
-                });
+                }) ;
+                i++;
                 lineIndex++;
             }
-
+            
             lineIndex += 2;
             // Read the ServiceDistributions
-             i = 1;
+            i= 1;
                 List<TimeDistribution> serviceDistribution = new List<TimeDistribution>();
-                lineIndex++;
-                
+                lineIndex++;  
                 try
                 {
                     while (lines[lineIndex] != "")
@@ -81,6 +82,7 @@ namespace MultiQueueModels
                             MaxRange = (int)(serviceDistribution[i].Probability * 100)
                         }); 
                         lineIndex++;
+                        i++;
 
                     }
                 }catch(Exception E) { };
@@ -109,24 +111,24 @@ namespace MultiQueueModels
                 }    
             
         }
-        public void Service_time(int id)
+        public void Service_time(SimulationCase customer)
         {
                 Random r = new Random();
                 int random_Num = r.Next(0, 90);
-                SimulationTable[id - 1].RandomService = random_Num;
-                for (int J = 0; J < SimulationTable[id - 1].AssignedServer.TimeDistribution.Count(); J++)
+                customer.RandomService = random_Num;
+                for (int J = 0; J < customer.AssignedServer.TimeDistribution.Count(); J++)
                 {
-                    if (SimulationTable[id - 1].AssignedServer.TimeDistribution[J].MinRange >= random_Num && SimulationTable[id - 1].AssignedServer.TimeDistribution[J].MaxRange <= random_Num)
+                    if (customer.AssignedServer.TimeDistribution[J].MinRange >= random_Num && customer.AssignedServer.TimeDistribution[J].MaxRange <= random_Num)
                     {
-                    SimulationTable[id - 1].ServiceTime = SimulationTable[id - 1].AssignedServer.TimeDistribution[J].Time;
+                    customer.ServiceTime = customer.AssignedServer.TimeDistribution[J].Time;
                         break;
                     }
                 }       
 
         }
-        public void ChooseServer(int i)
+        public void ChooseServer(SimulationCase customer)
         {
-            SimulationCase customer=SimulationTable[i];
+          
 
 
             if (SelectionMethod.Equals (1))
@@ -150,7 +152,7 @@ namespace MultiQueueModels
                 }
 
             }
-            Service_time(customer.CustomerNumber);
+            Service_time(customer);
         }
         public void CalcArrivalTime(int i)
         {
@@ -169,11 +171,10 @@ namespace MultiQueueModels
             
         }
 
-        public void CalcTimeInQueue()
+        public void CalcTimeInQueue(int i)
         {
-            for (int i = 1; i < StoppingNumber + 1; i++)
-            {
-                if (i == 1)
+           
+                if (i == 0)
                 {
                     SimulationTable[i].TimeInQueue = 0;
                 }
@@ -185,7 +186,7 @@ namespace MultiQueueModels
                 {
                     SimulationTable[i].TimeInQueue = 0;
                 }
-            }
+            
 
         }
 
@@ -221,10 +222,10 @@ namespace MultiQueueModels
             {
                 customer_id(i);
                 find_interarrival(i);
-                //choose server 
                 CalcArrivalTime(i);
                 CalcStartTime(i);
                 CalcEndTime(i);
+                CalcTimeInQueue(i);
             }
 
 

@@ -111,3 +111,17 @@ D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Templat
 D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.csproj.CopyComplete
 D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.exe
 D:\college\modiling and simulation\task 1\git1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.pdb
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\bin\Debug\MultiQueueSimulation.exe.config
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\bin\Debug\MultiQueueSimulation.exe
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\bin\Debug\MultiQueueSimulation.pdb
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\bin\Debug\MultiQueueModels.dll
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\bin\Debug\MultiQueueModels.pdb
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.csproj.AssemblyReference.cache
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.csproj.SuggestedBindingRedirects.cache
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.Form1.resources
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.Properties.Resources.resources
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.csproj.GenerateResource.cache
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.csproj.CoreCompileInputs.cache
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.csproj.CopyComplete
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.exe
+C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling\Template_Students\MultiQueueSimulation\MultiQueueSimulation\obj\Debug\MultiQueueSimulation.pdb
