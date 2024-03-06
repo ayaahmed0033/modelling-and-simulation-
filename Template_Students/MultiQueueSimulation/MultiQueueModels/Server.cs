@@ -17,7 +17,6 @@ namespace MultiQueueModels
         public decimal IdleProbability { get; set; }
         public decimal AverageServiceTime { get; set; } 
         public decimal Utilization { get; set; }
-        public int min { get; set; }
         
         public bool avaialble { get; set; }
 
