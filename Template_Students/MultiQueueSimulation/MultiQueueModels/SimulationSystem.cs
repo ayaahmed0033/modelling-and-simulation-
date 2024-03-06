@@ -46,13 +46,17 @@ namespace MultiQueueModels
             lineIndex += 3;
             // Read the InterarrivalDistribution
             InterarrivalDistribution = new List<TimeDistribution>();
+            int i = 1;
             while (lines[lineIndex] != "")
             {
                 string[] distributionParts = lines[lineIndex].Split(',');
                 InterarrivalDistribution.Add(new TimeDistribution
                 {
                     Time = int.Parse(distributionParts[0]),
-                    Probability = decimal.Parse(distributionParts[1])
+                    Probability = decimal.Parse(distributionParts[1]),
+                    CummProbability = InterarrivalDistribution[i].Probability + InterarrivalDistribution[i - 1].Probability,
+                    MinRange = InterarrivalDistribution[i - 1].MaxRange,
+                    MaxRange = (int)(InterarrivalDistribution[i].Probability * 100)
                 });
                 lineIndex++;
             }
@@ -60,8 +64,7 @@ namespace MultiQueueModels
             lineIndex += 2;
             // Read the ServiceDistributions
             Servers = new List<Server>();
-            for (int i = 1; i < NumberOfServers+1; i++)
-            {
+             i = 1;
                 List<TimeDistribution> serviceDistribution = new List<TimeDistribution>();
                 lineIndex++;
                 
@@ -84,12 +87,20 @@ namespace MultiQueueModels
                 }catch(Exception E) { };
                 Servers.Add(new Server { TimeDistribution = serviceDistribution });
                 lineIndex++;
-            }
+            
 
         }
         public void find_interarrival()
         {
+            InterarrivalDistribution = new List<TimeDistribution>();
+            SimulationTable = new List<SimulationCase>();
+            for (int i = 0; i < StoppingNumber; i++)
+            {
+                Random r = new Random();
+                int random_Num = r.Next(0, 90);
 
+                SimulationTable[i].InterArrival = random_Num;
+            }
         }
         public void ChooseServer(SimulationCase customer)
         {
