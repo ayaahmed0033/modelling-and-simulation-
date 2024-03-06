@@ -89,16 +89,13 @@ namespace MultiQueueModels
             
 
         }
-        public void customer_id()
+        public void customer_id(int i)
         {
-            for(int i =1;i< StoppingNumber+1;i++)
-            SimulationTable[i].CustomerNumber =i;
+            SimulationTable[i].CustomerNumber =i+1;
         }
-        public void find_interarrival()
+        public void find_interarrival(int i)
         {
 
-            for (int i = 0; i < StoppingNumber; i++)
-            {
                 Random r = new Random();
                 int random_Num = r.Next(0, 90);
                 SimulationTable[i].RandomInterArrival = random_Num;
@@ -110,7 +107,7 @@ namespace MultiQueueModels
                         break;
                     }
                 }    
-            }
+            
         }
         public void Service_time(int id)
         {
@@ -232,10 +229,12 @@ namespace MultiQueueModels
 
         public void all()
         {
-            customer_id();
-            find_interarrival();
-            CalcArrivalTime();
-
+            for (int i = 0; i < StoppingNumber ; i++)
+            {
+                customer_id(i);
+                find_interarrival(i);
+                CalcArrivalTime();
+            }
 
 
 
