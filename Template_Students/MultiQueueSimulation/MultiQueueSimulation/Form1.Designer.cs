@@ -48,45 +48,5 @@ namespace MultiQueueSimulation
         #endregion
     }
 }
-namespace DataInsertWithoutDatabase
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            // Create a list to store data
-            List<Dictionary<string, object>> table = new List<Dictionary<string, object>>();
 
-            // Create a dictionary to represent a row of data
-            Dictionary<string, object> row1 = new Dictionary<string, object>
-            {
-                { "Column1", "Value1" },
-                { "Column2", 123 },
-                { "Column3", true }
-            };
-
-            // Add the row to the table
-            table.Add(row1);
-
-            // You can add more rows similarly
-            Dictionary<string, object> row2 = new Dictionary<string, object>
-            {
-                { "Column1", "Value2" },
-                { "Column2", 456 },
-                { "Column3", false }
-            };
-            table.Add(row2);
-
-            // Print the table
-            foreach (var row in table)
-            {
-                foreach (var kvp in row)
-                {
-                    Console.WriteLine($"{kvp.Key}: {kvp.Value}");
-                }
-                Console.WriteLine();
-            }
-        }
-    }
-}
 

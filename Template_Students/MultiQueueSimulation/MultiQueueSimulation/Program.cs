@@ -26,15 +26,15 @@ namespace MultiQueueSimulation
 
                 string path1 = @"C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueSimulation\TestCases\TestCase2.txt";
                 SimulationSystem system1 = new SimulationSystem();
-                system1.test_num(path);
+                system1.test_num(path1);
                 system1.all();
                 string result1 = TestingManager.Test(system, Constants.FileNames.TestCase2);
                 MessageBox.Show(result1);
 
                 string path2 = @"C:\Users\Aya\Downloads\modeling and simulation\task 1\modelling-and-simulation-\Template_Students\MultiQueueSimulation\MultiQueueSimulation\TestCases\TestCase3.txt";
                  SimulationSystem system2 = new SimulationSystem();
-                 system1.test_num(path);
-                 system1.all();
+                 system2.test_num(path2);
+                 system2.all();
                  string result2 = TestingManager.Test(system, Constants.FileNames.TestCase3);
                   MessageBox.Show(result2);
 
