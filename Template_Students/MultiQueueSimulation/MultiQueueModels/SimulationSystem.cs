@@ -163,25 +163,32 @@ namespace MultiQueueModels
         }
         public void ChooseServer(SimulationCase customer)
         {
-            if (SelectionMethod.Equals (1))
+            if (SelectionMethod.Equals(1))
             {
-                if (Servers[1].avaialble== true)
-                customer.AssignedServer = Servers[1];
+
+                for (int i = 0; i < NumberOfServers; i++)
+                    if (Servers[i].FinishTime < customer.ArrivalTime)
+                    {
+                        customer.AssignedServer = Servers[i];
+                        break;
+                    }
 
             }
-            
-            else if (SelectionMethod.Equals (2))
+
+            else if (SelectionMethod.Equals(2))
             {
+
+                List<int> emptyservers = new List<int>();
+
                 for (int i = 0; i < NumberOfServers; i++) // if all servers are full
                 {
-
-                    int min = i;
-
-                    if (Servers[min].FinishTime > Servers[i].FinishTime)
-                        min = i;
-                    customer.AssignedServer = Servers[min];
-
+                    if (Servers[i].FinishTime < customer.ArrivalTime)
+                        emptyservers.Add(i);
                 }
+                Random random = new Random();
+                int randomNumber = random.Next(0, emptyservers.Count);
+
+                customer.AssignedServer = Servers[randomNumber];
 
             }
             Service_time(customer);
