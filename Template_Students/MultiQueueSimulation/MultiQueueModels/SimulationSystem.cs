@@ -170,7 +170,11 @@ namespace MultiQueueModels
         }
         public void ChooseServer(SimulationCase customer)
         {
+
             if (SelectionMethod.Equals("HighestPriority"))
+
+            if (SelectionMethod.Equals(1))
+
             {
 
                 for (int i = 0; i < NumberOfServers; i++)
