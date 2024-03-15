@@ -96,13 +96,13 @@ namespace MultiQueueModels
                 }
                 else
                 {
-                    InterarrivalDistribution[i].CummProbability = InterarrivalDistribution[i].Probability + InterarrivalDistribution[i - 1].Probability;
+                    InterarrivalDistribution[i].CummProbability = InterarrivalDistribution[i].Probability + InterarrivalDistribution[i - 1].CummProbability;
                     InterarrivalDistribution[i].MinRange = InterarrivalDistribution[i - 1].MaxRange;
 
                 }
 
 
-                InterarrivalDistribution[i].MaxRange = (int)(InterarrivalDistribution[i].Probability * 100);
+                InterarrivalDistribution[i].MaxRange = (int)(InterarrivalDistribution[i].CummProbability * 100);
             }
         }
         public void calculate_cummulative_for_Servers()
@@ -115,12 +115,12 @@ namespace MultiQueueModels
                     }
                     else
                     {
-                        Servers[i].TimeDistribution[j].CummProbability = Servers[i].TimeDistribution[j].Probability + Servers[i].TimeDistribution[j - 1].Probability;
+                        Servers[i].TimeDistribution[j].CummProbability = Servers[i].TimeDistribution[j].Probability + Servers[i].TimeDistribution[j - 1].CummProbability;
                         Servers[i].TimeDistribution[j].MinRange = Servers[i].TimeDistribution[j - 1].MaxRange;
           
                     }
 
-                    Servers[i].TimeDistribution[j].MaxRange = (int)(Servers[i].TimeDistribution[j].Probability * 100);
+                    Servers[i].TimeDistribution[j].MaxRange = (int)(Servers[i].TimeDistribution[j].CummProbability * 100);
                 }
 
              }
@@ -130,6 +130,13 @@ namespace MultiQueueModels
             SimulationTable.Add(new SimulationCase());
             SimulationTable[i].CustomerNumber = ++i;
         }
+        public void calculate_Server_Id()
+        {
+            for (int i = 0; i < NumberOfServers; i++)
+            {
+                Servers[i].ID = i + 1;
+            }
+        }
         public void find_interarrival(int i)
         {
 
@@ -138,7 +145,7 @@ namespace MultiQueueModels
                 SimulationTable[i].RandomInterArrival = random_Num;
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
                 {
-                    if (InterarrivalDistribution[J].MinRange > random_Num && InterarrivalDistribution[J].MaxRange <= random_Num)
+                    if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
                     {
                         SimulationTable[i].InterArrival = InterarrivalDistribution[J].Time;
                         break;
@@ -163,25 +170,32 @@ namespace MultiQueueModels
         }
         public void ChooseServer(SimulationCase customer)
         {
-            if (SelectionMethod.Equals (1))
+            if (SelectionMethod.Equals("HighestPriority"))
             {
-                if (Servers[1].avaialble== true)
-                customer.AssignedServer = Servers[1];
+
+                for (int i = 0; i < NumberOfServers; i++)
+                    if (Servers[i].FinishTime < customer.ArrivalTime)
+                    {
+                        customer.AssignedServer = Servers[i];
+                        break;
+                    }
 
             }
-            
-            else if (SelectionMethod.Equals (2))
+
+            else if (SelectionMethod.Equals(2))
             {
+
+                List<int> emptyservers = new List<int>();
+
                 for (int i = 0; i < NumberOfServers; i++) // if all servers are full
                 {
-
-                    int min = i;
-
-                    if (Servers[min].FinishTime > Servers[i].FinishTime)
-                        min = i;
-                    customer.AssignedServer = Servers[min];
-
+                    if (Servers[i].FinishTime < customer.ArrivalTime)
+                        emptyservers.Add(i);
                 }
+                Random random = new Random();
+                int randomNumber = random.Next(0, emptyservers.Count);
+
+                customer.AssignedServer = Servers[randomNumber];
 
             }
             Service_time(customer);
@@ -239,10 +253,12 @@ namespace MultiQueueModels
                 }
            
         }
+        
         public void all()
         {
             calculate_InterArrival_Table();
             calculate_cummulative_for_Servers();
+            calculate_Server_Id();
 
             for (int i = 0; i < StoppingNumber ; i++)
             {
