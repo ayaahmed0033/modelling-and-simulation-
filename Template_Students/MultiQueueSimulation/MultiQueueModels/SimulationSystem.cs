@@ -149,19 +149,20 @@ namespace MultiQueueModels
         ///      B   &   C   &   E
         public void find_interarrival(int i)
         {
+            Random r = new Random();
+            int random_Num = r.Next(1, 99);
+            Random k = new Random();
+            int random_Num_2 = k.Next(1, 99);
+            SimulationTable[i].RandomInterArrival = random_Num;
+            SimulationTable[i].RandomService = random_Num_2;
             if (i == 0)
+            {
                 SimulationTable[i].InterArrival = 0;
+                return;
+            }
             else
             {
 
-
-
-                Random r = new Random();
-                int random_Num = r.Next(0, 90);
-                Random k = new Random();
-                int random_Num_2 = k.Next(0, 90);
-                SimulationTable[i].RandomInterArrival = random_Num;
-                SimulationTable[i].RandomService = random_Num_2;
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
                 {
                     if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
@@ -171,6 +172,7 @@ namespace MultiQueueModels
                     }
                 }
             }
+            
         }
         ///                  Arrival Time                  ///
         ///                  D
@@ -277,24 +279,7 @@ namespace MultiQueueModels
                 SimulationTable[i].AssignedServer.FinishTime = SimulationTable[i].StartTime + SimulationTable[i].ServiceTime;
             }
         }
-
-        public void CalcTimeInQueue(int i)
-        {     
-                if (i == 0)
-                {
-                    SimulationTable[i].TimeInQueue = 0;
-                }
-                else if (SimulationTable[i - 1].EndTime > SimulationTable[i].ArrivalTime)
-                {
-                    SimulationTable[i].TimeInQueue = SimulationTable[i - 1].EndTime - SimulationTable[i].ArrivalTime;
-                }
-                else
-                {
-                    SimulationTable[i].TimeInQueue = 0;
-                }          
-        }
-         
-       
+    
         public void all()
         {
             calculate_InterArrival_Table();
@@ -310,7 +295,7 @@ namespace MultiQueueModels
                 ChooseServer(SimulationTable[i]);
                 Service_time(SimulationTable[i], SimulationTable[i].AssignedServer);
                 CalcEndTime(i);
-                //CalcTimeInQueue(i);
+                
             }
         }
 
