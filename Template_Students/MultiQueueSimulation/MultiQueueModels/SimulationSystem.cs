@@ -199,14 +199,16 @@ namespace MultiQueueModels
                     {
                         customer.AssignedServer = Servers[i];
                         customer.StartTime = customer.ArrivalTime;
+                        customer.TimeInQueue = 0;
                         break;
                     }
                     // if no empty and he has to wait untill one is empty 
                     else
                     {
                         customer.AssignedServer = Servers[min];
+                        customer.StartTime = Servers[min].FinishTime;
+                        customer.TimeInQueue = customer.StartTime - customer.StartTime;
                     }
-
                 }
             }
             else if (SelectionMethod.ToString().Equals("Random"))
