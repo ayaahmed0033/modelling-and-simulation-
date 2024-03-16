@@ -157,9 +157,9 @@ namespace MultiQueueModels
 
 
                 Random r = new Random();
-                int random_Num = r.Next(0, 90);
+                int random_Num = r.Next(1, 99);
                 Random k = new Random();
-                int random_Num_2 = k.Next(0, 90);
+                int random_Num_2 = k.Next(1, 99);
                 SimulationTable[i].RandomInterArrival = random_Num;
                 SimulationTable[i].RandomService = random_Num_2;
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
