@@ -161,8 +161,7 @@ namespace MultiQueueModels
                 return;
             }
             else
-            {
-
+            { 
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
                 {
                     if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
