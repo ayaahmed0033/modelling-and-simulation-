@@ -149,23 +149,29 @@ namespace MultiQueueModels
         ///      B   &   C   &   E
         public void find_interarrival(int i)
         {
+            if (i == 0)
+                SimulationTable[i].InterArrival = 0;
+            else
+            {
+
+
 
                 Random r = new Random();
                 int random_Num = r.Next(0, 90);
-            Random k = new Random();
-            int random_Num_2 = k.Next(0, 90);
+                Random k = new Random();
+                int random_Num_2 = k.Next(0, 90);
                 SimulationTable[i].RandomInterArrival = random_Num;
                 SimulationTable[i].RandomService = random_Num_2;
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
+                {
+                    if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
                     {
-                        if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
-                        {
-                            SimulationTable[i].InterArrival = InterarrivalDistribution[J].Time;
-                            break;
-                        }
-                    }   
+                        SimulationTable[i].InterArrival = InterarrivalDistribution[J].Time;
+                        break;
+                    }
                 }
-
+            }
+        }
         ///                  Arrival Time                  ///
         ///                  D
         public void CalcArrivalTime(int i)
@@ -207,7 +213,7 @@ namespace MultiQueueModels
                     {
                         customer.AssignedServer = Servers[min];
                         customer.StartTime = Servers[min].FinishTime;
-                        customer.TimeInQueue = customer.StartTime - customer.StartTime;
+                        customer.TimeInQueue = customer.StartTime - customer.ArrivalTime;
                     }
                 }
             }
@@ -304,7 +310,7 @@ namespace MultiQueueModels
                 ChooseServer(SimulationTable[i]);
                 Service_time(SimulationTable[i], SimulationTable[i].AssignedServer);
                 CalcEndTime(i);
-                CalcTimeInQueue(i);
+                //CalcTimeInQueue(i);
             }
         }
 
