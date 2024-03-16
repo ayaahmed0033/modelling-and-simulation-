@@ -185,10 +185,10 @@ namespace MultiQueueModels
         public void ChooseServer(SimulationCase customer)
         {
 
-            if (SelectionMethod.ToString().Equals("HighestPriority"))
-            {
                 int min, i;
                 min =i = 0;
+            if (SelectionMethod.ToString().Equals("HighestPriority"))
+            {
                 // if there is an empty one  enter utomatically to ....
                 for (i = 0; i < NumberOfServers; i++)
                 {
@@ -213,15 +213,26 @@ namespace MultiQueueModels
             {
 
                 List<int> emptyservers = new List<int>();
-                for (int i = 0; i < NumberOfServers; i++) // if all servers are full
+                for ( i = 0; i < NumberOfServers; i++) // if all servers are full
                 {
+                    if (Servers[min].FinishTime > Servers[i].FinishTime)
+                        min = i;
+
                     if (Servers[i].FinishTime <= customer.ArrivalTime)
                         emptyservers.Add(i);
+
                 }
+                int length = emptyservers.Count;
+                if (length==0)
+                    customer.AssignedServer = Servers[min];
+
+                else
+                {
                 Random random = new Random();
                 int randomNumber = random.Next(0, emptyservers.Count);
-
                 customer.AssignedServer = Servers[randomNumber];
+                }
+
 
             }
            
