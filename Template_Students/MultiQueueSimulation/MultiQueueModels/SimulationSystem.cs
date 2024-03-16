@@ -187,19 +187,27 @@ namespace MultiQueueModels
 
             if (SelectionMethod.ToString().Equals("HighestPriority"))
             {
+                int min, i;
+                min =i = 0;
                 // if there is an empty one  enter utomatically to ....
-                for (int i = 0; i < NumberOfServers; i++)
+                for (i = 0; i < NumberOfServers; i++)
+                {
+                    if (Servers[min].FinishTime > Servers[i].FinishTime)
+                        min = i;
 
                     if (Servers[i].FinishTime <= customer.ArrivalTime)
                     {
                         customer.AssignedServer = Servers[i];
-                        customer.StartTime= customer.ArrivalTime;
+                        customer.StartTime = customer.ArrivalTime;
                         break;
                     }
-                // if no empty and he has to wait untill one is empty 
+                    // if no empty and he has to wait untill one is empty 
+                    else
+                    {
+                        customer.AssignedServer = Servers[min];
+                    }
 
-
-
+                }
             }
             else if (SelectionMethod.ToString().Equals("Random"))
             {
