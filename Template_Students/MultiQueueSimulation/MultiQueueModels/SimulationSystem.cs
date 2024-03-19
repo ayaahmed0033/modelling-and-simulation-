@@ -16,7 +16,7 @@ namespace MultiQueueModels
             this.PerformanceMeasures = new PerformanceMeasures();
             this.SimulationTable = new List<SimulationCase>();
         }
-        public void test_num(string path)
+        public void Read_CSV(string path)
         {
             string[] lines = File.ReadAllLines(path);
 
@@ -143,14 +143,7 @@ namespace MultiQueueModels
         {
             SimulationTable[i].CustomerNumber = ++i;
         }
-        public int GenerateRand()
-        {
-            SimulationCase c = new SimulationCase();
-            Random random = new Random();
-            c.RandomInterArrival = random.Next(0, 100);
-            return c.RandomInterArrival;
-        }
-
+      
 
         ///      Find Random interarrival time
         ///      Assign interarrival time       
@@ -164,6 +157,7 @@ namespace MultiQueueModels
             int random_Num_2 = k.Next(1, 99);
             SimulationTable[i].RandomInterArrival = random_Num;
             SimulationTable[i].RandomService = random_Num_2;
+
             if (i == 0)
             {
                 SimulationTable[i].InterArrival = 0;
@@ -340,7 +334,6 @@ namespace MultiQueueModels
             {
                 SimulationTable.Add(new SimulationCase());
                 customer_id(i);
-                GenerateRand();
                 find_interarrival(i);
                 CalcArrivalTime(i);
                 ChooseServer(SimulationTable[i]);
