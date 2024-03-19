@@ -244,13 +244,20 @@ namespace MultiQueueModels
                 }
                 int length = emptyservers.Count;
                 if (length == 0)
+                {
                     customer.AssignedServer = Servers[min];
+                   // customer.StartTime = Servers[min].FinishTime;
+                   // customer.TimeInQueue = customer.StartTime - customer.ArrivalTime;
 
+                }
                 else
                 {
                     Random random = new Random();
                     int randomNumber = random.Next(0, emptyservers.Count);
                     customer.AssignedServer = Servers[randomNumber];
+                   // customer.StartTime = customer.ArrivalTime;
+                   // customer.TimeInQueue = 0;
+
 
                 }
 
@@ -318,7 +325,10 @@ namespace MultiQueueModels
             customer.AssignedServer.TotalWorkingTime += customer.ServiceTime;
             customer.AssignedServer.nu_customer_went_in++;
         }
-
+        public void find_run_time(SimulationCase customer)
+        {
+            sys_run_time = Math.Max(sys_run_time, customer.EndTime);
+        }
         // OUR MAIN
         public void all()
         {
@@ -342,31 +352,30 @@ namespace MultiQueueModels
                 MaxQueueLength(SimulationTable[i], i);
                 probabilitywait(SimulationTable[i]);
                 averageServiceTime(SimulationTable[i]);
+                find_run_time(SimulationTable[i]);
 
             }
             performance();
         }
         public void performance()
         {
-            int run_time_of_simulation = SimulationTable[StoppingNumber - 1].EndTime;
-
-            PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
+       PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
                 try
                 {
-                PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
+                    PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
                 } catch (Exception) { };
             for (int i = 0; i < NumberOfServers; i++)
             {
                  try
-                    {
+                 {
                     Servers[i].AverageServiceTime = (Servers[i].TotalWorkingTime / Servers[i].nu_customer_went_in);
-                    }catch (Exception) { };
+                 }catch (Exception) { };
 
-                    Servers[i].IdleProbability = run_time_of_simulation - Servers[i].TotalWorkingTime;
-                    Servers[i].IdleProbability /= run_time_of_simulation;
+                    Servers[i].IdleProbability = sys_run_time - Servers[i].TotalWorkingTime;
+                    Servers[i].IdleProbability /= sys_run_time;
 
                    
-                    Servers[i].Utilization = Servers[i].TotalWorkingTime / run_time_of_simulation;
+                    Servers[i].Utilization = Servers[i].TotalWorkingTime / sys_run_time;
             }
             
 
@@ -386,6 +395,7 @@ namespace MultiQueueModels
 
         /// extra ///
          public static int number_customers_waiting { get; set; }
+        public static int sys_run_time { get; set; }
 
     }
 }
