@@ -86,7 +86,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestCases\ReadMe.txt" />
     <Content Include="TestCases\TestCase1.txt" />
     <Content Include="TestCases\TestCase2.txt" />
     <Content Include="TestCases\TestCase3.txt" />
