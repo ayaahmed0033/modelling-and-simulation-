@@ -45,13 +45,14 @@ namespace MultiQueueSimulation
                  else if(i==2)
                     result = TestingManager.Test(system, Constants.FileNames.TestCase3);
                 MessageBox.Show(result);
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1(system ,path));     // 7oto second paramter 3and forms 3ashan ta5do el path
             }
 
 
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1(system));
 
         }
     }
