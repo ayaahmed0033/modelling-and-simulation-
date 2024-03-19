@@ -17,7 +17,7 @@ namespace MultiQueueSimulation
         [STAThread]
         static void Main()
         {
-            SimulationSystem system = new SimulationSystem();
+            
 
             string actualpath = System.IO.Directory.GetCurrentDirectory();
             //MessageBox.Show(actualpath);
@@ -28,24 +28,26 @@ namespace MultiQueueSimulation
                 x[i] = t[i];
             }
             x[10] = "TestCases";
-            string[] arr = { "TestCase1.txt", "TestCase2.txt", "TestCase3.txt" };   
+            string[] arr = { "TestCase1.txt", "TestCase2.txt", "TestCase3.txt"};   
             string result = "";
             for(int i = 0; i < arr.Length; i++)
             {
+                SimulationSystem system = new SimulationSystem();
                 x[11] = arr[i];
                 String A = string.Join("\\", x);
                 MessageBox.Show(A);
                 system.Read_CSV(A);
                 system.all();
-                result = TestingManager.Test(system, Constants.FileNames.TestCase1);
+                if (i == 0)
+                     result = TestingManager.Test(system, Constants.FileNames.TestCase1);
+                else if(i==1)
+                    result = TestingManager.Test(system, Constants.FileNames.TestCase2);
+                 else if(i==2)
+                    result = TestingManager.Test(system, Constants.FileNames.TestCase3);
                 MessageBox.Show(result);
             }
 
 
-
-
-
-            
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);

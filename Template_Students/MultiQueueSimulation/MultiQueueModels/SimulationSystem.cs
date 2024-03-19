@@ -143,6 +143,11 @@ namespace MultiQueueModels
         {
             SimulationTable[i].CustomerNumber = ++i;
         }
+        public int random_num()
+        {
+            Random r = new Random();
+            return r.Next(1, 100);
+        }
       
 
         ///      Find Random interarrival time
@@ -151,10 +156,9 @@ namespace MultiQueueModels
         ///      B   &   C   &   E
         public void find_interarrival(int i)
         {
-            Random r = new Random();
-            int random_Num = r.Next(1, 99);
-            Random k = new Random();
-            int random_Num_2 = k.Next(1, 99);
+           
+            int random_Num= random_num();
+            int random_Num_2 = random_num();
             SimulationTable[i].RandomInterArrival = random_Num;
             SimulationTable[i].RandomService = random_Num_2;
 
@@ -167,6 +171,7 @@ namespace MultiQueueModels
             {
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
                 {
+                   
                     if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
                     {
                         SimulationTable[i].InterArrival = InterarrivalDistribution[J].Time;
