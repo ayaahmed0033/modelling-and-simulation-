@@ -311,17 +311,13 @@ namespace MultiQueueModels
 
         public void MaxQueueLength(SimulationCase customer, int i)
         {
-
             PerformanceMeasures.MaxQueueLength = Math.Max(PerformanceMeasures.MaxQueueLength, customer.TimeInQueue);
-
-
         }
         public void averageServiceTime(SimulationCase customer)
         {
             customer.AssignedServer.TotalWorkingTime += customer.ServiceTime;
             customer.AssignedServer.nu_customer_went_in++;
         }
-
 
         // OUR MAIN
         public void all()
@@ -352,18 +348,27 @@ namespace MultiQueueModels
         }
         public void performance()
         {
-            try
-            {
-                PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
-                PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
-                for (int i = 0; i < NumberOfServers; i++)
-                {
+            int run_time_of_simulation = SimulationTable[StoppingNumber - 1].EndTime;
 
+            PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
+                try
+                {
+                PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
+                } catch (Exception) { };
+            for (int i = 0; i < NumberOfServers; i++)
+            {
+                 try
+                    {
                     Servers[i].AverageServiceTime = (Servers[i].TotalWorkingTime / Servers[i].nu_customer_went_in);
-                    Servers[i].IdleProbability = SimulationTable[StoppingNumber - 1].EndTime - Servers[i].TotalWorkingTime;
-                    Servers[i].IdleProbability /= SimulationTable[StoppingNumber - 1].EndTime;
-                }
-            }catch(Exception e) { };
+                    }catch (Exception) { };
+
+                    Servers[i].IdleProbability = run_time_of_simulation - Servers[i].TotalWorkingTime;
+                    Servers[i].IdleProbability /= run_time_of_simulation;
+
+                   
+                    Servers[i].Utilization = Servers[i].TotalWorkingTime / run_time_of_simulation;
+            }
+            
 
         }
 
