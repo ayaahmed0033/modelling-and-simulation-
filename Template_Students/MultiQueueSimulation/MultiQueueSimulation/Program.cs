@@ -20,23 +20,23 @@ namespace MultiQueueSimulation
             
 
             string actualpath = System.IO.Directory.GetCurrentDirectory();
-            //MessageBox.Show(actualpath);
-            string[] x = new string[12];
+            //MessageBox.Show(actualpath);         
             string[] t = actualpath.Split('\\');
-            for (int i = 0; i < 10; i++)
+            string[] x = new string[t.Length];  
+            for (int i = 0; i < x.Length-1; i++)   
             {
                 x[i] = t[i];
             }
-            x[10] = "TestCases";
+            x[x.Length - 2] = "TestCases";
             string[] arr = { "TestCase1.txt", "TestCase2.txt", "TestCase3.txt"};   
             string result = "";
             for(int i = 0; i < arr.Length; i++)
             {
                 SimulationSystem system = new SimulationSystem();
-                x[11] = arr[i];
-                String A = string.Join("\\", x);
-                MessageBox.Show(A);
-                system.Read_CSV(A);
+                x[x.Length-1] = arr[i];
+                String path = string.Join("\\", x);
+                MessageBox.Show(path);
+                system.test_num(path);
                 system.all();
                 if (i == 0)
                      result = TestingManager.Test(system, Constants.FileNames.TestCase1);

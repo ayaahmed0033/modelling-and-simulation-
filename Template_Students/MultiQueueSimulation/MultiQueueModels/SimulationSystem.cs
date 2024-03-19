@@ -16,7 +16,7 @@ namespace MultiQueueModels
             this.PerformanceMeasures = new PerformanceMeasures();
             this.SimulationTable = new List<SimulationCase>();
         }
-        public void Read_CSV(string path)
+        public void test_num(string path)
         {
             string[] lines = File.ReadAllLines(path);
 
