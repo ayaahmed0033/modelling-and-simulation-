@@ -303,7 +303,7 @@ namespace MultiQueueModels
         //               PERFORMANCE FUNCTIONS                        // 
         public void average_waiting_time(SimulationCase customer)
         {
-            PerformanceMeasures.AverageWaitingTime += customer.TimeInQueue;
+            total_waiting_time += customer.TimeInQueue;
         }
        
         public void probabilitywait(SimulationCase customer)
@@ -357,23 +357,20 @@ namespace MultiQueueModels
         }
         public void performance()
         {
-       PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
-                try
-                {
-                    PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
-                } catch (Exception) { };
+       PerformanceMeasures.AverageWaitingTime = total_waiting_time/ (decimal)(StoppingNumber);
+               
+        PerformanceMeasures.WaitingProbability = (decimal)(number_customers_waiting) / (decimal)(StoppingNumber);
+          
             for (int i = 0; i < NumberOfServers; i++)
             {
-                 try
-                 {
-                    Servers[i].AverageServiceTime = (Servers[i].TotalWorkingTime / Servers[i].nu_customer_went_in);
-                 }catch (Exception) { };
+                if (Servers[i].nu_customer_went_in != 0)
+                {
+                    Servers[i].AverageServiceTime = ((decimal)(Servers[i].TotalWorkingTime) / (decimal)(Servers[i].nu_customer_went_in));
+                }
+                 
+                    Servers[i].IdleProbability = (sys_run_time - (decimal)(Servers[i].TotalWorkingTime))/ sys_run_time;
 
-                    Servers[i].IdleProbability = sys_run_time - Servers[i].TotalWorkingTime;
-                    Servers[i].IdleProbability /= sys_run_time;
-
-                   
-                    Servers[i].Utilization = Servers[i].TotalWorkingTime / sys_run_time;
+                    Servers[i].Utilization = (decimal)(Servers[i].TotalWorkingTime) / sys_run_time;
             }
             
 
@@ -393,7 +390,8 @@ namespace MultiQueueModels
 
         /// extra ///
          public static int number_customers_waiting { get; set; }
-        public static int sys_run_time { get; set; }
+        public static decimal sys_run_time { get; set; }
+        public static decimal total_waiting_time { get; set; }
 
     }
 }
