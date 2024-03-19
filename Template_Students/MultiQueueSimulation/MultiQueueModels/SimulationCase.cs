@@ -23,5 +23,6 @@ namespace MultiQueueModels
         public int StartTime { get; set; }
         public int EndTime { get; set; }
         public int TimeInQueue { get; set; }
+
     }
 }

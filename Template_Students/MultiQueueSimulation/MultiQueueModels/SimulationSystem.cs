@@ -40,21 +40,21 @@ namespace MultiQueueModels
             lineIndex += 3;
             // Read the InterarrivalDistribution
 
-           
+
             while (lines[lineIndex] != "")
             {
-                
+
                 string[] distributionParts = lines[lineIndex].Split(',');
                 InterarrivalDistribution.Add(new TimeDistribution
                 {
                     Time = int.Parse(distributionParts[0]),
                     Probability = decimal.Parse(distributionParts[1]),
-                    
-                }) ;
-                
+
+                });
+
                 lineIndex++;
             }
-            
+
             lineIndex += 2;
             // Read the ServiceDistributions
 
@@ -82,17 +82,17 @@ namespace MultiQueueModels
                 lineIndex++;
 
             }
-            
+
 
         }
 
 
 
         ///                                 MY MAIN                        ///
-       ///            FIRST STEP TO FIND  CUMM TABLE FOR INTERARRIVAL  and servers           ///
-       
+        ///            FIRST STEP TO FIND  CUMM TABLE FOR INTERARRIVAL  and servers           ///
+
         public void calculate_InterArrival_Table()
-        {  
+        {
             for (int i = 0; i < InterarrivalDistribution.Count; i++)
             {
                 // Inter arrival
@@ -109,9 +109,11 @@ namespace MultiQueueModels
             }
         }
         public void calculate_cummulative_for_Servers()
-        { for (int i = 0; i < NumberOfServers; i++)
+        {
+            for (int i = 0; i < NumberOfServers; i++)
             {
-                for (int j = 0; j < Servers[i].TimeDistribution.Count; j++) {
+                for (int j = 0; j < Servers[i].TimeDistribution.Count; j++)
+                {
                     if (j == 0)
                     {
                         Servers[i].TimeDistribution[j].CummProbability = Servers[i].TimeDistribution[j].Probability;
@@ -119,11 +121,11 @@ namespace MultiQueueModels
                     else
                     {
                         Servers[i].TimeDistribution[j].CummProbability = Servers[i].TimeDistribution[j].Probability + Servers[i].TimeDistribution[j - 1].CummProbability;
-                        Servers[i].TimeDistribution[j].MinRange = Servers[i].TimeDistribution[j - 1].MaxRange;        
+                        Servers[i].TimeDistribution[j].MinRange = Servers[i].TimeDistribution[j - 1].MaxRange;
                     }
                     Servers[i].TimeDistribution[j].MaxRange = (int)(Servers[i].TimeDistribution[j].CummProbability * 100);
                 }
-             }
+            }
         }
 
 
@@ -135,11 +137,18 @@ namespace MultiQueueModels
             {
                 Servers[i].ID = i + 1;
             }
-        }   
+        }
         // A
         public void customer_id(int i)
         {
             SimulationTable[i].CustomerNumber = ++i;
+        }
+        public int GenerateRand()
+        {
+            SimulationCase c = new SimulationCase();
+            Random random = new Random();
+            c.RandomInterArrival = random.Next(0, 100);
+            return c.RandomInterArrival;
         }
 
 
@@ -161,7 +170,7 @@ namespace MultiQueueModels
                 return;
             }
             else
-            { 
+            {
                 for (int J = 0; J < InterarrivalDistribution.Count(); J++)
                 {
                     if (InterarrivalDistribution[J].MinRange < random_Num && InterarrivalDistribution[J].MaxRange >= random_Num)
@@ -171,7 +180,7 @@ namespace MultiQueueModels
                     }
                 }
             }
-            
+
         }
         ///                  Arrival Time                  ///
         ///                  D
@@ -185,15 +194,15 @@ namespace MultiQueueModels
             {
                 SimulationTable[i].ArrivalTime = SimulationTable[i].InterArrival + SimulationTable[i - 1].ArrivalTime;
             }
-            
+
         }
 
         ///                  Server choosing      ///
         public void ChooseServer(SimulationCase customer)
         {
 
-                int min, i;
-                min =i = 0;
+            int min, i;
+            min = i = 0;
             if (SelectionMethod.ToString().Equals("HighestPriority"))
             {
                 // if there is an empty one  enter utomatically to ....
@@ -215,6 +224,8 @@ namespace MultiQueueModels
                         customer.AssignedServer = Servers[min];
                         customer.StartTime = Servers[min].FinishTime;
                         customer.TimeInQueue = customer.StartTime - customer.ArrivalTime;
+
+
                     }
                 }
             }
@@ -222,7 +233,7 @@ namespace MultiQueueModels
             {
 
                 List<int> emptyservers = new List<int>();
-                for ( i = 0; i < NumberOfServers; i++) // if all servers are full
+                for (i = 0; i < NumberOfServers; i++) // if all servers are full
                 {
                     if (Servers[min].FinishTime > Servers[i].FinishTime)
                         min = i;
@@ -232,70 +243,128 @@ namespace MultiQueueModels
 
                 }
                 int length = emptyservers.Count;
-                if (length==0)
+                if (length == 0)
                     customer.AssignedServer = Servers[min];
 
                 else
                 {
-                Random random = new Random();
-                int randomNumber = random.Next(0, emptyservers.Count);
-                customer.AssignedServer = Servers[randomNumber];
+                    Random random = new Random();
+                    int randomNumber = random.Next(0, emptyservers.Count);
+                    customer.AssignedServer = Servers[randomNumber];
+
                 }
 
 
             }
-           
+
         }
         //         Find Service Time 
         //         Find End Time 
         //         G & H
-        public void Service_time(SimulationCase customer, Server  Current_Server)
+        public void Service_time(SimulationCase customer, Server Current_Server)
         {
-                
-                for (int J = 0; J < Current_Server.TimeDistribution.Count(); J++)
+
+            for (int J = 0; J < Current_Server.TimeDistribution.Count(); J++)
+            {
+                if (Current_Server.TimeDistribution[J].MinRange < customer.RandomService && Current_Server.TimeDistribution[J].MaxRange >= customer.RandomService)
                 {
-                    if (Current_Server.TimeDistribution[J].MinRange < customer.RandomService && Current_Server.TimeDistribution[J].MaxRange >= customer.RandomService)
-                    {
                     customer.ServiceTime = Current_Server.TimeDistribution[J].Time;
-                        break;
-                    }
+                    break;
                 }
-           
+            }
+
 
         }
         ///     Find end Time of both  Server and System 
         ///     H
         public void CalcEndTime(int i)
         {
+
             if (i == 0)
             {
                 SimulationTable[i].EndTime = SimulationTable[i].ServiceTime;
                 SimulationTable[i].AssignedServer.FinishTime = SimulationTable[i].ServiceTime;
+
             }
             else
             {
                 SimulationTable[i].EndTime = SimulationTable[i].StartTime + SimulationTable[i].ServiceTime;
                 SimulationTable[i].AssignedServer.FinishTime = SimulationTable[i].StartTime + SimulationTable[i].ServiceTime;
+
             }
         }
-    
+
+        //               PERFORMANCE FUNCTIONS                        // 
+        public void average_waiting_time(SimulationCase customer)
+        {
+            PerformanceMeasures.AverageWaitingTime += customer.TimeInQueue;
+        }
+        static int number_customers_waiting;
+        public void probabilitywait(SimulationCase customer)
+        {
+            if (customer.TimeInQueue != 0)
+            {
+                number_customers_waiting++;
+            }
+
+        }
+
+        public void MaxQueueLength(SimulationCase customer, int i)
+        {
+
+            PerformanceMeasures.MaxQueueLength = Math.Max(PerformanceMeasures.MaxQueueLength, customer.TimeInQueue);
+
+
+        }
+        public void averageServiceTime(SimulationCase customer)
+        {
+            customer.AssignedServer.TotalWorkingTime += customer.ServiceTime;
+            customer.AssignedServer.nu_customer_went_in++;
+        }
+
+
+        // OUR MAIN
         public void all()
         {
             calculate_InterArrival_Table();
             calculate_cummulative_for_Servers();
             calculate_Server_Id();
 
-            for (int i = 0; i < StoppingNumber ; i++)
+            for (int i = 0; i < StoppingNumber; i++)
             {
                 SimulationTable.Add(new SimulationCase());
                 customer_id(i);
+                GenerateRand();
                 find_interarrival(i);
                 CalcArrivalTime(i);
                 ChooseServer(SimulationTable[i]);
                 Service_time(SimulationTable[i], SimulationTable[i].AssignedServer);
                 CalcEndTime(i);
-                
+
+                // performance
+                average_waiting_time(SimulationTable[i]);
+                MaxQueueLength(SimulationTable[i], i);
+                averageServiceTime(SimulationTable[i]);
+
             }
+            performance();
+        }
+        public void performance()
+        {
+
+            PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
+            PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
+            for (int i = 0; i < NumberOfServers; i++)
+            {
+                try
+                {
+                    Servers[i].AverageServiceTime = Servers[i].TotalWorkingTime / Servers[i].nu_customer_went_in;
+                    Servers[i].IdleProbability = (SimulationTable[StoppingNumber - 1].EndTime - Servers[i].TotalWorkingTime) / (SimulationTable[StoppingNumber - 1].EndTime);
+                }
+                catch (Exception e) { };
+
+            }
+
         }
 
         ///////////// INPUTS ///////////// 
