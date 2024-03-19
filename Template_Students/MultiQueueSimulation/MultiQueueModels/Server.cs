@@ -18,7 +18,7 @@ namespace MultiQueueModels
         public decimal AverageServiceTime { get; set; }
         public decimal Utilization { get; set; }
 
-        public bool working_now { get; set; }
+        public bool working { get; set; }
         public int nu_customer_went_in { get; set; }
 
         public List<TimeDistribution> TimeDistribution;

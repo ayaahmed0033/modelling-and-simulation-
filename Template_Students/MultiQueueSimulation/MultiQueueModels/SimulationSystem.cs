@@ -299,7 +299,7 @@ namespace MultiQueueModels
         {
             PerformanceMeasures.AverageWaitingTime += customer.TimeInQueue;
         }
-        static int number_customers_waiting;
+       
         public void probabilitywait(SimulationCase customer)
         {
             if (customer.TimeInQueue != 0)
@@ -344,6 +344,7 @@ namespace MultiQueueModels
                 // performance
                 average_waiting_time(SimulationTable[i]);
                 MaxQueueLength(SimulationTable[i], i);
+                probabilitywait(SimulationTable[i]);
                 averageServiceTime(SimulationTable[i]);
 
             }
@@ -351,19 +352,18 @@ namespace MultiQueueModels
         }
         public void performance()
         {
-
-            PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
-            PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
-            for (int i = 0; i < NumberOfServers; i++)
+            try
             {
-                try
+                PerformanceMeasures.AverageWaitingTime /= StoppingNumber;
+                PerformanceMeasures.WaitingProbability = number_customers_waiting / StoppingNumber;
+                for (int i = 0; i < NumberOfServers; i++)
                 {
-                    Servers[i].AverageServiceTime = Servers[i].TotalWorkingTime / Servers[i].nu_customer_went_in;
-                    Servers[i].IdleProbability = (SimulationTable[StoppingNumber - 1].EndTime - Servers[i].TotalWorkingTime) / (SimulationTable[StoppingNumber - 1].EndTime);
-                }
-                catch (Exception e) { };
 
-            }
+                    Servers[i].AverageServiceTime = (Servers[i].TotalWorkingTime / Servers[i].nu_customer_went_in);
+                    Servers[i].IdleProbability = SimulationTable[StoppingNumber - 1].EndTime - Servers[i].TotalWorkingTime;
+                    Servers[i].IdleProbability /= SimulationTable[StoppingNumber - 1].EndTime;
+                }
+            }catch(Exception e) { };
 
         }
 
@@ -378,6 +378,9 @@ namespace MultiQueueModels
         ///////////// OUTPUTS /////////////
         public List<SimulationCase> SimulationTable { get; set; }
         public PerformanceMeasures PerformanceMeasures { get; set; }
+
+        /// extra ///
+         public static int number_customers_waiting { get; set; }
 
     }
 }
