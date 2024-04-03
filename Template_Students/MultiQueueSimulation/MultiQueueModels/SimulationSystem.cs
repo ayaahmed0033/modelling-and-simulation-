@@ -143,12 +143,13 @@ namespace MultiQueueModels
         {
             SimulationTable[i].CustomerNumber = ++i;
         }
+        private Random random = new Random();
+
         public int random_num()
         {
-            Random r = new Random();
-            return r.Next(1, 100);
+            return random.Next(1, 100);
         }
-      
+
 
         ///      Find Random interarrival time
         ///      Assign interarrival time       
@@ -228,7 +229,7 @@ namespace MultiQueueModels
                     }
                 }
             }
-            else if (SelectionMethod.ToString().Equals("Random"))
+            else 
             {
 
                 List<int> emptyservers = new List<int>();
@@ -245,8 +246,8 @@ namespace MultiQueueModels
                 if (length == 0)
                 {
                     customer.AssignedServer = Servers[min];
-                   // customer.StartTime = Servers[min].FinishTime;
-                   // customer.TimeInQueue = customer.StartTime - customer.ArrivalTime;
+                    customer.StartTime = Servers[min].FinishTime;
+                    customer.TimeInQueue = customer.StartTime - customer.ArrivalTime;
 
                 }
                 else
@@ -254,14 +255,13 @@ namespace MultiQueueModels
                     Random random = new Random();
                     int randomNumber = random.Next(0, emptyservers.Count);
                     customer.AssignedServer = Servers[randomNumber];
-                   // customer.StartTime = customer.ArrivalTime;
-                   // customer.TimeInQueue = 0;
+                    customer.StartTime = customer.ArrivalTime;
+                    customer.TimeInQueue = 0;
 
 
                 }
-
-
             }
+
 
         }
         //         Find Service Time 
@@ -304,6 +304,7 @@ namespace MultiQueueModels
         public void average_waiting_time(SimulationCase customer)
         {
             total_waiting_time += customer.TimeInQueue;
+   
         }
        
         public void probabilitywait(SimulationCase customer)
@@ -317,7 +318,8 @@ namespace MultiQueueModels
 
         public void MaxQueueLength(SimulationCase customer, int i)
         {
-            PerformanceMeasures.MaxQueueLength = Math.Max(PerformanceMeasures.MaxQueueLength, customer.TimeInQueue);
+            if(customer.TimeInQueue!=0)
+            PerformanceMeasures.MaxQueueLength++;
         }
         public void averageServiceTime(SimulationCase customer)
         {
@@ -367,10 +369,13 @@ namespace MultiQueueModels
                 {
                     Servers[i].AverageServiceTime = ((decimal)(Servers[i].TotalWorkingTime) / (decimal)(Servers[i].nu_customer_went_in));
                 }
-                 
-                    Servers[i].IdleProbability = (sys_run_time - (decimal)(Servers[i].TotalWorkingTime))/ sys_run_time;
-
+                if(sys_run_time != 0){ 
+                  Servers[i].IdleProbability = (sys_run_time - (decimal)(Servers[i].TotalWorkingTime))/ sys_run_time;
                     Servers[i].Utilization = (decimal)(Servers[i].TotalWorkingTime) / sys_run_time;
+                }
+                
+
+                    
             }
             
 

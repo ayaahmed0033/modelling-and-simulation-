@@ -17,28 +17,28 @@ namespace MultiQueueSimulation
         [STAThread]
         static void Main()
         {
-            
+
 
             string actualpath = System.IO.Directory.GetCurrentDirectory();
             //MessageBox.Show(actualpath);         
             string[] t = actualpath.Split('\\');
-            string[] x = new string[t.Length];  
-            for (int i = 0; i < x.Length-1; i++)   
+            string[] x = new string[t.Length];
+            for (int i = 0; i < x.Length - 1; i++)
             {
                 x[i] = t[i];
             }
             x[x.Length - 2] = "TestCases";
-            string[] arr = { "TestCase1.txt", "TestCase2.txt", "TestCase3.txt"};   
+            string[] arr = { "TestCase1.txt", "TestCase2.txt", "TestCase3.txt" };
             string result = "";
-           
-             
-            int choose =1;                                         //// change  choose numberrr ////
+
+
+            int choose = 2;                                         //// change  choose numberrr ////
             SimulationSystem system = new SimulationSystem();
 
             String path = "";
             // MessageBox.Show(path);
 
-            if (choose==1)
+            if (choose == 1)
             {
                 x[x.Length - 1] = arr[0];
                 path = string.Join("\\", x);
@@ -66,9 +66,9 @@ namespace MultiQueueSimulation
                 MessageBox.Show(result);
             }
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(true);
-            //Application.Run(new Form1(system, path));     // 7oto second paramter 3and forms 3ashan ta5do el path
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(true);
+            Application.Run(new Form1(system, path));     
 
 
 
